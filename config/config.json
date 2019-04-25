@@ -1,14 +1,14 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "exampledb",
+    "username": "jalen",
+    "password": "hello",
+    "database": "storytimedb",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": null,
+    "username": "jalen",
+    "password": "hello",
     "database": "testdb",
     "host": "localhost",
     "dialect": "mysql",
