@@ -1,2 +1,11 @@
-DROP DATABASE IF EXISTS stroytimedb;
-CREATE DATABASE stroytimedb;
+DROP DATABASE IF EXISTS storytimedb;
+CREATE DATABASE storytimedb;
+
+USE storytimedb;
+
+CREATE TABLE stories (
+	id INT AUTO_INCREMENT NOT NULL,
+    title VARCHAR(100),
+    genre VARCHAR(100),
+    PRIMARY KEY
+);
