@@ -1,9 +1,19 @@
-<h2>What happens next?</h2>
-<form data-id="{{this.id}}" class="update-form">
+<h2>Create your story</h2>
+<form data-id="{{this.id}}">
     <div class="form-group">
-        <label for="storyinput">Add to it:</label>
-        <input type="text" id="storyinput" name="input" value="{{this.input}}">
+        <label for="Title">Title:</label>
+        <input type="text" id="storyTitle" name="title" value="{{this.title}}">
+        <label for="Story">Story:</label>
+        <input type="text" id="storyInput" name="storyInput" value="{{this.storyInput}}">
     </div>
-    <button type="submit">Add To Story</button>
+    <button type="submit" id="submit-btn">Add To Story</button>
 </form>
+<h2> What genre is your story?</h2>
+    <select id="genres">
+        <option value="Comedy">Comedy</option>
+        <option value="Drama">Drama</option>
+        <option value="Sci-Fi">Sci-Fi</option>
+        <option value="Thriller">Thriller</option>
+        <option value="Romance">Romance</option>
+    </select>
 
