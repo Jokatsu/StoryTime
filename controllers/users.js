@@ -1,17 +1,5 @@
 const db = require('../models');
-const {validToken, createToken} = require('./../utilities/tokenService');
-
-function cookieCheck({signedCookies: {token}}, res){
-  validToken(token).then(({user: {id}}) => {
-    db.User.findOne({where: {id}}).then(({username}) => {
-      return res.render('index', {user: {
-        username
-      }})
-    })
-  }).catch(err => {
-    if (err) throw err;
-  })
-}
+const {createToken} = require('./../utilities/tokenService');
 
 function signup(req, res){
   db.User.create(req.body).then(user => {
@@ -54,7 +42,6 @@ function logout(req,res){
 }
 
 module.exports = {
-  cookieCheck, 
   signup,
   login,
   logout
