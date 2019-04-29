@@ -4,14 +4,16 @@
   "description": "Project 2 Starter",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "lint": "eslint --quiet .",
     "fix": "eslint --fix .",
     "test": "npm run lint && cross-env NODE_ENV=test mocha -u tdd --reporter spec --exit"
   },
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^6.0.0",
+    "bcrypt": "^3.0.6",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^6.2.0",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "jquery-parallax.js": "^1.5.0",
