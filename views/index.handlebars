@@ -1,6 +1,6 @@
 <nav>
   <div class="nav-wrapper">
-    <a href="#" class="brand-logo">Logo</a>
+    <a href="#" class="brand-logo">Storytime</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li><a href="/signup">Sign Up</a></li>
       <li><a href="/login">Login</a></li>
@@ -25,16 +25,19 @@
     <div class="col s12 stories">
       {{#if stories}}
       <div id="storyTable">
-        <p>Stories go Here</p>
+        <p>Stories go Here. To create a new one, click <a href="../views/addStory.handlebars">Here</a></p>
       </div>
       {{else}}
       <div>
         <h3 id="noStory">There Are No Stories Here Yet! Would You Like To Create One?</h2>
+          <div id="outer">
+            <a href="/create/story" id="storyButton" class="btn">Start a story</a>
+          </div>
       </div>
       {{/if}}
     </div>
 
-    
+
 
 
 
