@@ -12,15 +12,16 @@
 </div>
 
 <div id="login-form"> 
-    <input type="text" id="username">
-    placeholder
-    <input type="text" id="password">
-    <input type="text" id="submit">
+    <form action="/users/login" method="post">
+    <input type="text" placeholder="username" name="username">
+    <input type="text" placeholder="password" name="password">
+    <button id="submit" type="submit">Submit</button>
+    </form>
 </div>
 
 <style> 
     #login-form {
-        width: 25%
+        width: 25%;
         margin: 0 auto;
     }
 h1 {

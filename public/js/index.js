@@ -32,10 +32,10 @@ $(document).ready(function() {
     if (authorId) {
       authorId = "/?author_id=" + authorId;
     }
-    $.get("/api/stories" + authorId, function(data) {
+    $.get("/stories" + authorId, function(data) {
       stories = data;
       if (!stories || !stories.length) {
-        displayEmpty(author);
+        // displayEmpty(author);
       }
       else {
         getRows();
@@ -45,7 +45,7 @@ $(document).ready(function() {
   function deleteStory (id) {
     $.ajax({
       method: "DELETE",
-      url: "/api/stories/" + id
+      url: "/stories/" + id
     }).then(function() {
       getStories(postCategorySelect.val());
     });
@@ -88,7 +88,7 @@ $(document).ready(function() {
   function continueStory() {
     var currentStory = $(this).parent().parent().data("post");
     window.location.href = "/index?story_id=" + currentStory.id;
-    )
   }
+
 });
 

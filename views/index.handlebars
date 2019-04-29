@@ -2,14 +2,15 @@
   <div class="nav-wrapper">
     <a href="#" class="brand-logo">Storytime</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="/signup">Sign Up</a></li>
-      <li><a href="/login">Login</a></li>
+      <li><a href="/users/logout">Logout</a></li>
+      <li><a href="/story">Story</a></li>
+
     </ul>
   </div>
 </nav>
 
 <div class="parallax-window" data-parallax="scroll" data-image-src="../images/4U6A0902.jpg">
-  <span id="parallaxText">Welcome to Storytime</span>
+  <span id="parallaxText">Welcome to Storytime {{user.username}}</span>
   <span id="blockTint"></span>
 </div>
 
