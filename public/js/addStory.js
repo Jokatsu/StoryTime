@@ -52,7 +52,12 @@ $(document).ready(function() {
       submitStory(newStory);
     }
   }
-
+  event.preventDefault();
+  var newStory ={
+    title: $("#storyTitle").val().trim(),
+    text: $("#storyInput").val().trim(),
+    genre: selection
+  }
   // Submits a new post and brings user to blog page upon completion
   function submitStory(post) {
     $.post("/api/stories", post, function() {

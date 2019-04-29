@@ -1,16 +1,16 @@
 <nav>
   <div class="nav-wrapper">
-    <a href="#" class="brand-logo">Logo</a>
+    <a href="#" class="brand-logo">Storytime</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="sass.html">Sass</a></li>
-      <li><a href="badges.html">Components</a></li>
-      <li><a href="collapsible.html">JavaScript</a></li>
+      <li><a href="/users/logout">Logout</a></li>
+      <li><a href="/story">Story</a></li>
+
     </ul>
   </div>
 </nav>
 
 <div class="parallax-window" data-parallax="scroll" data-image-src="../images/4U6A0902.jpg">
-  <span id="parallaxText">Welcome to Storytime</span>
+  <span id="parallaxText">Welcome to Storytime {{user.username}}</span>
   <span id="blockTint"></span>
 </div>
 
@@ -30,12 +30,15 @@
       </div>
       {{else}}
       <div>
-        <h3 id="noStory">There Are No Stories Here Yet!
+        <h3 id="noStory">There Are No Stories Here Yet! Would You Like To Create One?</h2>
+          <div id="outer">
+            <a href="/create/story" id="storyButton" class="btn">Start a story</a>
+          </div>
       </div>
       {{/if}}
     </div>
 
-    
+
 
 
 

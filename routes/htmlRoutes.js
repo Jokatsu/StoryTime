@@ -1,12 +1,39 @@
-var path = require("path");
+const { validToken } = require('./../utilities/tokenService');
+const db = require('../models');
 
-module.exports = function(app) {
-  // Load index page
-  app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../views/index.handlebars"));
+module.exports = function (app) {
+  app.get("/", ({ signedCookies: { token } }, res) => {
+    if (token) {
+      validToken(token).then(({ user: { id, username } }) => {
+        db.User.findOne({ where: { username, id } }).then(({ username }) => {
+          return res.render("index", { user: { username } });
+        }).catch(err => {
+          if (err) throw err;
+        })
+      }).catch(err => {
+        if (err) throw err;
+      })
+    } else {
+      res.render("login", { msg: "Story Time!" })
+    }
   });
-  app.get("/addstory", function(req, res) {
-    res.sendFile(path.join(__dirname, "../views/story.handlebars"));
+  app.get("/story", ({ signedCookies: { token } }, res) => {
+    if (token) {
+      validToken(token).then(({ user: { id, username } }) => {
+        db.User.findOne({ where: { username, id } }).then(({ username }) => {
+          return res.render("story", { user: { username } });
+        }).catch(err => {
+          if (err) throw err;
+        })
+      }).catch(err => {
+        if (err) throw err;
+      })
+    } else {
+      res.render("login", { msg: "Story Time!" })
+    }
   });
-  app.post("/")
+
+  app.get('/login', (req, res) => res.render('login'));
+
+  app.get('/signup', (req, res) => res.render('signup'));
 };
