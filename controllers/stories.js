@@ -1,15 +1,31 @@
-function getAll(rec,res){
-    console.log('hit getAll function')
+const db = require('../models');
+
+function getAll(req,res){
+    db.Story.findAll().then(function(dbStory) {
+        res.json(dbStory);
+    });
 }
-function getOne(rec,res){
-    console.log('hit getOne function')
+function getOne(req,res){
+    db.Story.findOne({
+        where: req.params
+    }).then(function(dbStory) {
+        res.json(dbStory);
+    });
 }
 
-function updateOne(rec,res){
+function deleteOne(req, res){
+    db.Story.destroy({
+        where: req.params
+    }).then(function(dbStory) {
+        res.json(dbStory);
+    });
+}
+
+function updateOne(req,res){
     console.log('hit updateOne function')
 }
 
-function create(rec,res){
+function create(req,res){
     console.log('hit create function')    
 }
 
@@ -17,5 +33,6 @@ module.exports = {
     getAll,
     getOne,
     updateOne,
+    deleteOne,
     create
 }
