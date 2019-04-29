@@ -49,11 +49,29 @@ html {
   background-color: rgb(27, 25, 25,0.72);
 }
 
-#storyButton{
+#userText{
+  display: flex;
+  margin-top: -15vh;
+  justify-content: center;
+  color: white;
+  font-size: calc(0.07*100vw + 1px);
+  font-family: 'Cinzel', serif;
+ 
+}
+
+option{
+  color:black; 
+}
+
+#storyBtn{
   font-size: calc(0.02*100vw);
   width: 30vw;
   font-family: 'Cinzel', serif;
   padding-top: 0.3vh;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin: 10vh auto;
 }
 /* 
 select{

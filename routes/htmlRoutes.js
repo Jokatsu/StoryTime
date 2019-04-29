@@ -17,21 +17,25 @@ module.exports = function (app) {
       res.render("login", { msg: "Story Time!" })
     }
   });
-  app.get("/story", ({ signedCookies: { token } }, res) => {
-    if (token) {
-      validToken(token).then(({ user: { id, username } }) => {
-        db.User.findOne({ where: { username, id } }).then(({ username }) => {
-          return res.render("story", { user: { username } });
-        }).catch(err => {
-          if (err) throw err;
-        })
+
+  /////////////////////////////////////////////////////////////
+
+app.get("/create/story", ({ signedCookies: { token } }, res) => {
+  if (token) {
+    validToken(token).then(({ user: { id, username } }) => {
+      db.User.findOne({ where: { username, id } }).then(({ username }) => {
+        return res.render("story", { user: { username } });
       }).catch(err => {
         if (err) throw err;
       })
-    } else {
-      res.render("login", { msg: "Story Time!" })
-    }
-  });
+    }).catch(err => {
+      if (err) throw err;
+    })
+  } else {
+    res.render("login", { msg: "Story Time!" })
+  }
+});
+
 
   app.get('/login', (req, res) => res.render('login'));
 

@@ -1,20 +1,43 @@
-<h2>Create Your Story</h2>
-{{!-- <form data-id="{{this.id}}"> --}}
+<div class="container">
+    <h2>Create Your Story</h2>
     <h1>Yo whats good {{user.username}}</h1>
-    {{!-- <div class="form-group">
-        <label for="Title">Title:</label>
-        <input type="text" id="storyTitle" name="title" value="{{this.title}}">
-        <label for="Story">Story:</label>
-        <input type="text" id="storyInput" name="storyInput" value="{{this.storyInput}}">
-    </div> --}}
-    <button type="submit" id="submit-btn">Add To Story</button>
-{{!-- </form> --}}
-<h2> What genre is your story?</h2>
-    <select id="genres">
-        <option value="Comedy">Comedy</option>
-        <option value="Drama">Drama</option>
-        <option value="Sci-Fi">Sci-Fi</option>
-        <option value="Thriller">Thriller</option>
-        <option value="Romance">Romance</option>
-    </select>
+    <div class="row">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="title" type="text" data-length="90">
+                    <label for="title">Story Title</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="story" class="materialize-textarea" data-length="500"></textarea>
+                    <label for="story">Story</label>
+                </div>
+            </div>
+        </form>
+    </div>
 
+    {{!-- </form> --}}
+
+    <div class="container input-field col s12">
+    <h3> What genre is your story?</h3>
+        <select id="genres">
+            <option value="Comedy">Comedy</option>
+            <option value="Drama">Drama</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Romance">Romance</option>
+        </select>
+    </div>
+
+    <button type="submit" id="storyBtn">Add To Story</button>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('input#title, textarea#story').characterCounter();
+        $('select').formSelect();
+    });
+</script>
