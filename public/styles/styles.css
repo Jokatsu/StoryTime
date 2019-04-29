@@ -1,4 +1,80 @@
+.container{
+  font-family: 'Cinzel', serif; 
+}
+
 .list-group-item {
   line-height: 2.5;
 }
 
+/* Hide The Scroll Bar */
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0px; 
+  background: transparent;
+}
+
+/* ====================== */
+  
+.brand-logo{
+  font-family: 'Cinzel', serif; 
+}
+.parallax-window {
+   min-height: 40vh;
+   width: 100vw;
+   height: 22vh;
+   background: transparent;
+   z-index:2;
+  }
+
+#noStory{
+  font-size: 2rem;
+  font-family: 'Cinzel', serif; 
+  font-weight: bold;
+  text-align: center;
+}
+
+#parallaxText{
+  min-height: 40vh;
+  height: 22vh;
+  display: flex;
+  justify-content: center;
+  color: white;
+  padding-top: 13vh;
+  font-size: calc(0.07*100vw + 1px);
+  font-family: 'Cinzel', serif;
+  background-color: rgb(27, 25, 25,0.72);
+}
+
+#storyButton{
+  font-size: calc(0.02*100vw);
+  width: 30vw;
+  font-family: 'Cinzel', serif;
+  padding-top: 0.3vh;
+}
+/* 
+select{
+  display:flex !important;
+} */
+#outer{
+  display:flex;
+  width: 100%; 
+  justify-content: center; 
+}
+
+#blockTint{
+  width:100vw;
+  min-height: 400px; 
+  color:black;
+  z-index: 8; 
+}
+
+#mainTitle{
+  display:flex;
+  justify-content: center;
+  font-family: 'Cinzel', serif; 
+  font-size: 3rem; 
+}

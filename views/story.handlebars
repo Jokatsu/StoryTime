@@ -1,0 +1,45 @@
+<div class="container">
+    <h2>Create your story</h2>
+    <div class="row">
+        <form class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="title" type="text" data-length="80">
+                    <label for="title">Title</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="story" class="materialize-textarea" data-length="500"></textarea>
+                    <label for="story">Story</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="input-field col s12">
+        <h2> What genre is your story?</h2>
+        <select>
+            <option value="" disabled selected>Select the Genre</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Drama">Drama</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Romance">Romance</option>
+        </select>
+    </div>
+    <div id="submit">
+        <a href="#" id="submitStory" class="btn">Submit</a>
+    </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('select').formSelect();
+        $('input#title, textarea#story').characterCounter();
+
+    });
+
+</script>
