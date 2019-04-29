@@ -12,6 +12,6 @@ $("#submit-btn").on("click", function(event){
   var newStory ={
     title: $("#storyTitle").val().trim(),
     text: $("#storyInput").val().trim(),
-    genre: selection;
+    genre: selection
   }
 })
