@@ -59,6 +59,17 @@ $(document).ready(function () {
 //       res.render("/");
 //     });
 //   }
+  // A function to get Authors and then render our list of Authors
+  // function getGenres() {
+  //   $.get("/api/", renderAuthorList);
+  // }
+
+  // function createGenreRow(genre) {
+  //   var listOption = $("<option>");
+  //   listOption.attr("value", genre.id);
+  //   listOption.text(genre.name);
+  //   return listOption;
+  // }
 
 //   // Gets post data for the current post if we're editing, or if we're adding to an author's existing posts
 //   $.get(queryUrl, function (data) {
