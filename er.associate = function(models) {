@@ -1,0 +1,284 @@
+[1mdiff --git a/models/User.js b/models/User.js[m
+[1mindex 42d3973..a460a46 100644[m
+[1m--- a/models/User.js[m
+[1m+++ b/models/User.js[m
+[36m@@ -14,5 +14,11 @@[m [mmodule.exports = function (sequelize, {STRING}) {[m
+   User.prototype.validPassword = function(password) {[m
+     return bcrypt.compareSync(password, this.password);[m
+   };[m
+[32m+[m[41m  [m
+[32m+[m[32m  User.associate = function(models) {[m
+[32m+[m[32m    User.hasMany(models.Story, {[m
+[32m+[m[32m      onDelete: "cascade",[m
+[32m+[m[32m    });[m
+[32m+[m[32m  };[m
+   return User;[m
+ };[m
+\ No newline at end of file[m
+[1mdiff --git a/models/story.js b/models/story.js[m
+[1mindex 4969bbf..3f2f2b8 100644[m
+[1m--- a/models/story.js[m
+[1m+++ b/models/story.js[m
+[36m@@ -19,12 +19,13 @@[m [mmodule.exports = function(sequelize, DataTypes) {[m
+       allowNull: false[m
+     }[m
+   });[m
+[31m-  // Story.associate = function(models) {[m
+[31m-  //   postMessage.belongsTo(models.User, {[m
+[31m-  //     foreignKey: {[m
+[31m-  //       allowNull: false[m
+[31m-  //     }[m
+[31m-  //   });[m
+[31m-  // };[m
+[32m+[m
+[32m+[m[32m  Story.associate = function(models) {[m
+[32m+[m[32m    Story.belongsTo(models.User, {[m
+[32m+[m[32m      foreignKey: {[m
+[32m+[m[32m        allowNull: false[m
+[32m+[m[32m      }[m
+[32m+[m[32m    });[m
+[32m+[m[32m  };[m
+   return Story;[m
+ };[m
+[1mdiff --git a/public/js/addStory.js b/public/js/addStory.js[m
+[1mindex 677b717..e69de29 100644[m
+[1m--- a/public/js/addStory.js[m
+[1m+++ b/public/js/addStory.js[m
+[36m@@ -1,116 +0,0 @@[m
+[31m-$(document).ready(function() {[m
+[31m-  // Getting jQuery references to the post body, title, form, and author select[m
+[31m-  var bodyInput = $("#storyInput");[m
+[31m-  var titleInput = $("#storyTitle");[m
+[31m-  var genreSelect = $("#genreInput");[m
+[31m-  // Adding an event listener for when the form is submitted[m
+[31m-  $("#submitBtn").on("click", handleFormSubmit);[m
+[31m-  // Gets the part of the url that comes after the "?" (which we have if we're updating a post)[m
+[31m-  var url = window.location.search;[m
+[31m-  var postId;[m
+[31m-  var authorId;[m
+[31m-  // Sets a flag for whether or not we're updating a post to be false initially[m
+[31m-  var updating = false;[m
+[31m-[m
+[31m-  // If we have this section in our url, we pull out the post id from the url[m
+[31m-  // In '?post_id=1', postId is 1[m
+[31m-  if (url.indexOf("?story_id=") !== -1) {[m
+[31m-    postId = url.split("=")[1];[m
+[31m-    getStoryData(postId, "post");[m
+[31m-  }[m
+[31m-  // Otherwise if we have an author_id in our url, preset the author select box to be our Author[m
+[31m-  else if (url.indexOf("?genre_id=") !== -1) {[m
+[31m-    authorId = url.split("=")[1];[m
+[31m-  }[m
+[31m-[m
+[31m-  // Getting the authors, and their posts[m
+[31m-  getGenres();[m
+[31m-[m
+[31m-  // A function for handling what happens when the form to create a new post is submitted[m
+[31m-  function handleFormSubmit(event) {[m
+[31m-    event.preventDefault();[m
+[31m-    if ([m
+[31m-      !titleInput.val().trim() ||[m
+[31m-      !bodyInput.val().trim() ||[m
+[31m-      !genreSelect.val()[m
+[31m-    ) {[m
+[31m-      return;[m
+[31m-    }[m
+[31m-    // Constructing a newPost object to hand to the database[m
+[31m-    var newStory = {[m
+[31m-      title: titleInput.val().trim(),[m
+[31m-      body: bodyInput.val().trim(),[m
+[31m-      genre: genreSelect.val()[m
+[31m-    };[m
+[31m-[m
+[31m-    // If we're updating a post run updatePost to update a post[m
+[31m-    // Otherwise run submitPost to create a whole new post[m
+[31m-    if (updating) {[m
+[31m-      newStory.id = storyId;[m
+[31m-      updateStory(newStory);[m
+[31m-    } else {[m
+[31m-      submitStory(newStory);[m
+[31m-    }[m
+[31m-  }[m
+[31m-  event.preventDefault();[m
+[31m-  var newStory ={[m
+[31m-    title: $("#storyTitle").val().trim(),[m
+[31m-    text: $("#storyInput").val().trim(),[m
+[31m-    genre: selection[m
+[31m-  }[m
+[31m-  // Submits a new post and brings user to blog page upon completion[m
+[31m-  function submitStory(post) {[m
+[31m-    $.post("/api/stories", post, function() {[m
+[31m-      window.location.href = "/";[m
+[31m-    });[m
+[31m-  }[m
+[31m-[m
+[31m-  // Gets post data for the current post if we're editing, or if we're adding to an author's existing posts[m
+[31m-  function getStoryData(id, type) {[m
+[31m-    var queryUrl;[m
+[31m-    switch (type) {[m
+[31m-      case "post":[m
+[31m-        queryUrl = "/api/stories/" + id;[m
+[31m-        break;[m
+[31m-      case "author":[m
+[31m-        queryUrl = "/api/authors/" + id;[m
+[31m-        break;[m
+[31m-      default:[m
+[31m-        return;[m
+[31m-    }[m
+[31m-    $.get(queryUrl, function(data) {[m
+[31m-      if (data) {[m
+[31m-        console.log(data.AuthorId || data.id);[m
+[31m-        // If this post exists, prefill our cms forms with its data[m
+[31m-        titleInput.val(data.title);[m
+[31m-        bodyInput.val(data.body);[m
+[31m-        authorId = data.AuthorId || data.id;[m
+[31m-        // If we have a post with this id, set a flag for us to know to update the post[m
+[31m-        // when we hit submit[m
+[31m-        updating = true;[m
+[31m-      }[m
+[31m-    });[m
+[31m-  }[m
+[31m-[m
+[31m-  // A function to get Authors and then render our list of Authors[m
+[31m-  // function getGenres() {[m
+[31m-  //   $.get("/api/", renderAuthorList);[m
+[31m-  // }[m
+[31m-[m
+[31m-  // function createGenreRow(genre) {[m
+[31m-  //   var listOption = $("<option>");[m
+[31m-  //   listOption.attr("value", genre.id);[m
+[31m-  //   listOption.text(genre.name);[m
+[31m-  //   return listOption;[m
+[31m-  // }[m
+[31m-[m
+[31m-  function updatePost(post) {[m
+[31m-    $.ajax({[m
+[31m-      method: "PUT",[m
+[31m-      url: "/api/stories",[m
+[31m-      data: post[m
+[31m-    }).then(function() {[m
+[31m-      window.location.href = "/index";[m
+[31m-    });[m
+[31m-  }[m
+[31m-});[m
+[1mdiff --git a/public/js/index.js b/public/js/index.js[m
+[1mindex 88dbfd5..7ae38ba 100644[m
+[1m--- a/public/js/index.js[m
+[1m+++ b/public/js/index.js[m
+[36m@@ -1,4 +1,5 @@[m
+ $(document).ready(function() {[m
+[32m+[m[41m  [m
+   $(".parallax-window").parallax({[m
+     imageSrc: "../images/4U6A0902.jpg"[m
+   });[m
+[1mdiff --git a/public/styles/styles.css b/public/styles/styles.css[m
+[1mindex a3524be..51fa647 100644[m
+[1m--- a/public/styles/styles.css[m
+[1m+++ b/public/styles/styles.css[m
+[36m@@ -43,7 +43,7 @@[m [mhtml {[m
+   display: flex;[m
+   justify-content: center;[m
+   color: white;[m
+[31m-  padding-top: 13vh;[m
+[32m+[m[32m  padding-top: 11vh;[m
+   font-size: calc(0.07*100vw + 1px);[m
+   font-family: 'Cinzel', serif;[m
+   background-color: rgb(27, 25, 25,0.72);[m
+[36m@@ -51,7 +51,7 @@[m [mhtml {[m
+ [m
+ #userText{[m
+   display: flex;[m
+[31m-  margin-top: -15vh;[m
+[32m+[m[32m  margin-top: -17vh;[m
+   justify-content: center;[m
+   color: white;[m
+   font-size: calc(0.07*100vw + 1px);[m
+[1mdiff --git a/routes/apiRoutes.js b/routes/apiRoutes.js[m
+[1mdeleted file mode 100644[m
+[1mindex 8d82b89..0000000[m
+[1m--- a/routes/apiRoutes.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,5 +0,0 @@[m
+[31m-// var db = require("../models");[m
+[31m-[m
+[31m-// module.exports = function(app) {[m
+[31m-[m
+[31m-// };[m
+[1mdiff --git a/routes/htmlRoutes.js b/routes/htmlRoutes.js[m
+[1mindex 0cf6ddb..04156f5 100644[m
+[1m--- a/routes/htmlRoutes.js[m
+[1m+++ b/routes/htmlRoutes.js[m
+[36m@@ -18,9 +18,7 @@[m [mmodule.exports = function (app) {[m
+     }[m
+   });[m
+ [m
+[31m-  /////////////////////////////////////////////////////////////[m
+[31m-[m
+[31m-  app.get("/create/story", ({ signedCookies: { token } }, res) => {[m
+[32m+[m[32m  app.get("/story", ({ signedCookies: { token } }, res) => {[m
+     if (token) {[m
+       validToken(token).then(({ user: { id, username } }) => {[m
+         db.User.findOne({ where: { username, id } }).then(({ username }) => {[m
+[36m@@ -32,7 +30,7 @@[m [mmodule.exports = function (app) {[m
+         if (err) throw err;[m
+       })[m
+     } else {[m
+[31m-      res.render("login")[m
+[32m+[m[32m      res.render("login", { msg: "Story Time!" })[m
+     }[m
+   });[m
+ [m
+[36m@@ -40,4 +38,4 @@[m [mmodule.exports = function (app) {[m
+   app.get('/login', (req, res) => res.render('login'));[m
+ [m
+   app.get('/signup', (req, res) => res.render('signup'));[m
+[31m-};[m
+[32m+[m[32m};[m
+\ No newline at end of file[m
+[1mdiff --git a/views/index.handlebars b/views/index.handlebars[m
+[1mindex b0a2517..146ecdb 100644[m
+[1m--- a/views/index.handlebars[m
+[1m+++ b/views/index.handlebars[m
+[36m@@ -1,3 +1,9 @@[m
+[32m+[m[32m<ul id="dropdown1" class="dropdown-content">[m
+[32m+[m[32m  <li><a href="#!">one</a></li>[m
+[32m+[m[32m  <li><a href="#!">two</a></li>[m
+[32m+[m[32m  <li class="divider"></li>[m
+[32m+[m[32m  <li><a href="#!">three</a></li>[m
+[32m+[m[32m</ul>[m
+ <nav>[m
+   <div class="nav-wrapper">[m
+     <a href="#" class="brand-logo">Storytime</a>[m
+[36m@@ -32,16 +38,15 @@[m
+       <div>[m
+         <h3 id="noStory">There Are No Stories Here Yet! Would You Like To Create One?</h2>[m
+           <div id="outer">[m
+[31m-            <a href="/create/story" id="storyButton" class="btn">Start a story</a>[m
+[32m+[m[32m            <a href="/story" id="storyButton" class="btn">Start a story</a>[m
+           </div>[m
+       </div>[m
+       {{/if}}[m
+     </div>[m
+[32m+[m[32m  </div>[m
+ [m
+[31m-[m
+[31m-[m
+[31m-[m
+[31m-[m
+[32m+[m[32m  <div class="row">[m
+[32m+[m[32m    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo facere, molestiae alias neque repellat deserunt libero at culpa quaerat ea voluptas inventore tenetur eligendi illo et itaque illum quisquam. Fugit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, placeat! Velit perferendis doloremque illo porro at obcaecati, earum non voluptates tempore quaerat minus neque ratione voluptate. Voluptas ut commodi molestias?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo facere, molestiae alias neque repellat deserunt libero at culpa quaerat ea voluptas inventore tenetur eligendi illo et itaque illum quisquam. Fugit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, placeat! Velit perferendis doloremque illo porro at obcaecati, earum non voluptates tempore quaerat minus neque ratione voluptate. Voluptas ut commodi molestias?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo facere, molestiae alias neque repellat deserunt libero at culpa quaerat ea voluptas inventore tenetur eligendi illo et itaque illum quisquam. Fugit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, placeat! Velit perferendis doloremque illo porro at obcaecati, earum non voluptates tempore quaerat minus neque ratione voluptate. Voluptas ut commodi molestias?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo facere, molestiae alias neque repellat deserunt libero at culpa quaerat ea voluptas inventore tenetur eligendi illo et itaque illum quisquam. Fugit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, placeat! Velit perferendis doloremque illo porro at obcaecati, earum non voluptates tempore quaerat minus neque ratione voluptate. Voluptas ut commodi molestias?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo facere, molestiae alias neque repellat deserunt libero at culpa quaerat ea voluptas inventore tenetur eligendi illo et itaque illum quisquam. Fugit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, placeat! Velit perferendis doloremque illo porro at obcaecati, earum non voluptates tempore quaerat minus neque ratione voluptate. Voluptas ut commodi molestias?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo facere, molestiae alias neque repellat deserunt libero at culpa quaerat ea voluptas inventore tenetur eligendi illo et itaque illum quisquam. Fugit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, placeat! Velit perferendis doloremque illo porro at obcaecati, earum non voluptates tempore quaerat minus neque ratione voluptate. Voluptas ut commodi molestias?</p>[m
+   </div>[m
+ [m
+ [m
+[1mdiff --git a/views/story.handlebars b/views/story.handlebars[m
+[1mindex c6b3a6f..40edf1f 100644[m
+[1m--- a/views/story.handlebars[m
+[1m+++ b/views/story.handlebars[m
+[36m@@ -40,5 +40,6 @@[m
+     $(document).ready(function () {[m
+         $('input#title, textarea#story').characterCounter();[m
+         $('select').formSelect();[m
+[32m+[m[32m        $(".dropdown-trigger").dropdown();[m
+     });[m
+ </script>[m
+\ No newline at end of file[m

@@ -1,7 +1,7 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
 
-  
-  var stories = sequelize.define("stories", {
+
+  var Story = sequelize.define("Story", {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -16,17 +16,17 @@ module.exports = function(sequelize, DataTypes) {
         len: [1]
       }
     },
-    body: {
+    text: {
       type: DataTypes.TEXT,
       allowNull: false
     }
   });
-  // Story.associate = function(models) {
-  //   postMessage.belongsTo(models.User, {
-  //     foreignKey: {
-  //       allowNull: false
-  //     }
-  //   });
-  // };
-  return stories;
+  Story.associate = function (models) {
+    Story.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
+  return Story;
 };

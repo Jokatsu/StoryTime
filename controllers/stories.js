@@ -1,9 +1,10 @@
 /* eslint-disable indent */
 /* eslint-disable prettier/prettier */
-var db = require("../models/story.js");
+var db = require("../models");
+const {validToken} = require('./../utilities/tokenService');
 
     function getAll (req, res) {
-        db.stories.findAll({}).then(function(data) {
+        db.Story.findAll({}).then(function(data) {
             var obj = {
                 stories : data,
             };
@@ -11,17 +12,21 @@ var db = require("../models/story.js");
         });
     }
 
-    function newStory (req, res) {
-        db.stories.create({
-            title: req.body.title,
-            genre: req.body.genres,
-            body: req.body.story
-        }).then(function(){
-            res.redirect("/");
-        });
+    function newStory ({signedCookies: {token}, body: {title, genre, text}}, res) {
+        if (token){
+            validToken(token).then(({user: {id}}) => {
+                let UserId = id;;
+                db.Story.create({ title, genre, text, UserId }).then(function(){
+                    res.redirect("/");
+                });
+            }).catch(err => {
+                if (err) throw err;
+            })
+        }
     }
+
     function updateStory (req, res) {
-        db.stories.update({
+        db.Story.update({
             where: {
                 title: req.params.title
             }
@@ -30,7 +35,7 @@ var db = require("../models/story.js");
         });
     }
     function del(req, res) {
-        db.stories.destroy({
+        db.Story.destroy({
             where : req.params.id
         }).then(function() {
             res.redirect("/");
