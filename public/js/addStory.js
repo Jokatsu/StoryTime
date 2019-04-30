@@ -93,16 +93,16 @@ $(document).ready(function() {
   }
 
   // A function to get Authors and then render our list of Authors
-  function getGenres() {
-    $.get("/api/", renderAuthorList);
-  }
+  // function getGenres() {
+  //   $.get("/api/", renderAuthorList);
+  // }
 
-  function createGenreRow(genre) {
-    var listOption = $("<option>");
-    listOption.attr("value", genre.id);
-    listOption.text(genre.name);
-    return listOption;
-  }
+  // function createGenreRow(genre) {
+  //   var listOption = $("<option>");
+  //   listOption.attr("value", genre.id);
+  //   listOption.text(genre.name);
+  //   return listOption;
+  // }
 
   function updatePost(post) {
     $.ajax({
