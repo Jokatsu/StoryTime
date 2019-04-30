@@ -26,9 +26,27 @@
     <div class="col s12 stories">
       {{#if stories}}
       <div id="storyTable">
-        <p>Stories go Here. To create a new one, click <a href="../views/addStory.handlebars">Here</a></p>
+        <ul>
+         {{#each stories}}
+         <li>
+           {{this.title}} 
+           Created by: {{this.userId}};
+         </li>
+         {{/each}}
+      </ul>
       </div>
-      {{else}}
+      <div id="userTable">
+        <ul>
+          {{#each users}}
+          <li>
+            {{this.username}}
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+    {{#if stories}}
+    {{else}}
       <div>
         <h3 id="noStory">There Are No Stories Here Yet! Would You Like To Create One?</h2>
           <div id="outer">
