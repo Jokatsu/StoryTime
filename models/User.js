@@ -1,6 +1,6 @@
 require('dotenv').config();
-const bcrypt = require('bcrypt');
-const { SALT_ROUNDS } = process.env;
+var bcrypt = require('bcrypt');
+var { SALT_ROUNDS } = process.env;
 
 module.exports = function (sequelize, {STRING}) {
   var User = sequelize.define("User", { 
