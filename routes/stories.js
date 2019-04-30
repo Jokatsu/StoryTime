@@ -5,7 +5,7 @@ var controller = require("./../controllers/stories");
 
   router.delete("/:id", controller.delete);
 
-  router.post("/story/create", controller.newStory);
+  router.post("/create", controller.newStory);
 
   router.put("/story/update", controller.updateStory);
 
