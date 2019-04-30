@@ -1,10 +1,12 @@
-const router = require('express').Router();
-const {getAll, getOne, deleteOne} = require('./../controllers/stories');
+var router = require("express").Router();
+var controller = require("./../controllers/stories");
 
-  router.get("/", getAll);
-  
-  router.get("/:id", getOne);
+  router.get("/", controller.getAll);
 
-  router.delete("/:id", deleteOne);
+  router.delete("/:id", controller.delete);
+
+  router.post("/create", controller.newStory);
+
+  router.put("/story/update", controller.updateStory);
 
   module.exports = router;

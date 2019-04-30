@@ -1,5 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
-  var Story = sequelize.define("Story", {
+
+  
+  var stories = sequelize.define("stories", {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -14,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
         len: [1]
       }
     },
-    text: {
+    body: {
       type: DataTypes.TEXT,
       allowNull: false
     }
@@ -26,5 +28,5 @@ module.exports = function(sequelize, DataTypes) {
   //     }
   //   });
   // };
-  return Story;
+  return stories;
 };
