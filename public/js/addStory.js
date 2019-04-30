@@ -1,23 +1,28 @@
 $(document).ready(function () {
-  // Getting jQuery references to the post body, title, form, and author select
-  
-  
-  
-  
-  // Adding an event listener for when the form is submitted
-  $("#storyBtn").on("click", function(){
-    var input = {
-      bodyInput: $("#story").val(),
-      titleInput: $("#title").val(),
-      genreSelect: $("#genres").val()
-    }
-    console.log(input);
+    // Getting jQuery references to the post body, title, form, and author select
 
-  });
 
-}); 
 
-  
+
+    // Adding an event listener for when the form is submitted
+    $("#storyBtn").on("click", function () {
+        var input = {
+            title: $("#title").val(),
+            genre: $("#genres").val(),
+            text: $("#story").val()
+        }
+        $.ajax({
+            type: "POST",
+            url: "/stories/create",
+            data: input
+        }).then(function () {
+            console.log("Posted");
+        });
+    });
+
+});
+
+
 
   // Gets the part of the url that comes after the "?" (which we have if we're updating a post)
   // Sets a flag for whether or not we're updating a post to be false initially
