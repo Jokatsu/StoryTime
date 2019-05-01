@@ -22,14 +22,14 @@
 
 <div class="container">
 
-  <div class="row">
+  <div class="row" id="storyContent">
     <div class="col s12 stories">
       {{#if stories}}
       <div id="storyTable">
-        <ul>
+        <ul id="storyUl">
           {{#each stories}}
           <li id="indexTable">
-           <p>{{this.title}}</p>
+           <p id="createdTitle">{{this.title}}</p>
            <p id="created"> Created by: {{User.dataValues.username}}</p>
           </li>
           {{/each}}

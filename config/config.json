@@ -1,11 +1,11 @@
 {
   "development": {
     "username": "root",
-    "password": "goheels2!",
+    "password": "root",
     "database": "storytimedb",
     "host": "localhost",
     "dialect": "mysql",
-    "port":3306
+    "port":8889
   },
   "test": {
     "username": "jalen",
