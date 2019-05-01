@@ -27,44 +27,31 @@
       {{#if stories}}
       <div id="storyTable">
         <ul>
-         {{#each stories}}
-         <li>
-           {{this.title}} 
-           Created by: {{this.userId}};
-         </li>
-         {{/each}}
-      </ul>
-      </div>
-      <div id="userTable">
-        <ul>
-          {{#each users}}
+          {{#each stories}}
           <li>
-            {{this.username}}
+            {{this.title}}
+            Created by: {{User.dataValues.username}};
           </li>
           {{/each}}
-        </ul>
-      </div>
-      {{/if}}
-    {{#if stories}}
-    {{else}}
-      <div>
-        <h3 id="noStory">There Are No Stories Here Yet! Would You Like To Create One?</h2>
-          <div id="outer">
-            <a href="/create/story" id="storyButton" class="btn">Start a story</a>
+          {{else}}
+          <div>
+            <h3 id="noStory">There Are No Stories Here Yet! Would You Like To Create One?</h2>
+              <div id="outer">
+                <a href="/create/story" id="storyButton" class="btn">Start a story</a>
+              </div>
           </div>
+          {{/if}}
       </div>
-      {{/if}}
+
+
+
+
+
     </div>
-
-
 
 
 
   </div>
 
 
-
-</div>
-
-
-<script src="/js/index.js"></script>
+  <script src="/js/index.js"></script>

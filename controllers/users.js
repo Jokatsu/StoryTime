@@ -18,7 +18,6 @@ function signup(req, res){
 
 function login({body: {username, password}}, res){
   db.User.findOne({ where: { username } }).then(function (user) {
-    console.log(user);
     if (!user) {
         res.redirect('/login');
     } else if (!user.validPassword(password)) {

@@ -1,12 +1,26 @@
 const { validToken } = require('./../utilities/tokenService');
 const db = require('../models');
 
+
+
+
+
 module.exports = function (app) {
   app.get("/", ({ signedCookies: { token } }, res) => {
+
     if (token) {
-      validToken(token).then(({ user: { id, username } }) => {
+
+
+      validToken(token).then(async ({ user: { id, username } }) => {
+        var storyArr = await db.Story.findAll({include: [db.User]});
+
+        console.log(storyArr[0].User.dataValues.username);
+
         db.User.findOne({ where: { username, id } }).then(({ username }) => {
-          return res.render("index", { user: { username } });
+          return res.render("index", {
+            user: { username },
+            stories: storyArr
+          });
         }).catch(err => {
           if (err) throw err;
         })
@@ -17,6 +31,8 @@ module.exports = function (app) {
       res.render("login", { msg: "Story Time!" })
     }
   });
+
+
 
   /////////////////////////////////////////////////////////////
 
@@ -41,3 +57,6 @@ module.exports = function (app) {
 
   app.get('/signup', (req, res) => res.render('signup'));
 };
+
+
+

@@ -4,11 +4,12 @@ var db = require("../models");
 const {validToken} = require('./../utilities/tokenService');
 
     function getAll (req, res) {
+        console.log("getRes")
         db.Story.findAll({}).then(function(data) {
             var obj = {
                 stories : data,
             };
-            res.send("/", obj);
+            res.render("index", obj);
         });
     }
 
