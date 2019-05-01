@@ -6,6 +6,7 @@ $(document).ready(function () {
 
     // Adding an event listener for when the form is submitted
     $("#storyBtn").on("click", function () {
+      window.location.href = "/";
         var input = {
             title: $("#title").val(),
             genre: $("#genres").val(),

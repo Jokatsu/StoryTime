@@ -9,7 +9,7 @@ const {validToken} = require('./../utilities/tokenService');
             var obj = {
                 stories : data,
             };
-            res.render("index", obj);
+            res.render("/", obj);
         });
     }
 
@@ -17,9 +17,10 @@ const {validToken} = require('./../utilities/tokenService');
         if (token){
             validToken(token).then(({user: {id}}) => {
                 let UserId = id;;
-                db.Story.create({ title, genre, text, UserId }).then(function(){
-                    res.redirect("/");
+                db.Story.create({ title, genre, text, UserId }).then(function(data){
+                    res.json(data);
                 });
+                res.redirect("/")
             }).catch(err => {
                 if (err) throw err;
             })

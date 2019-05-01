@@ -3,7 +3,7 @@
     <a href="#" class="brand-logo">Storytime</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li><a href="/users/logout">Logout</a></li>
-      <li><a href="/story">Contributions</a></li>
+      <li><a href="/create/story">Contributions</a></li>
 
     </ul>
   </div>
@@ -33,6 +33,7 @@
             Created by: {{User.dataValues.username}};
           </li>
           {{/each}}
+          
           {{else}}
           <div>
             <h3 id="noStory">There Are No Stories Here Yet! Would You Like To Create One?</h2>
