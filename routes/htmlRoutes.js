@@ -12,14 +12,12 @@ module.exports = function (app) {
 
 
       validToken(token).then(async ({ user: { id, username } }) => {
-        var storyArr = await db.Story.findAll({include: [db.User]});
-
-        console.log(storyArr[0].User.dataValues.username);
+        var stories = await db.Story.findAll({include: [db.User]});
 
         db.User.findOne({ where: { username, id } }).then(({ username }) => {
           return res.render("index", {
             user: { username },
-            stories: storyArr
+            stories
           });
         }).catch(err => {
           if (err) throw err;
@@ -49,6 +47,30 @@ module.exports = function (app) {
       })
     } else {
       res.render("login")
+    }
+  });
+
+  app.get("/view", (req , res) => {
+      token= req.signedCookies.token; 
+    if (token) {
+
+
+      validToken(token).then(async ({ user: { id, username } }) => {
+        var storyArr = await db.Story.findOne({include: [db.User]});
+      
+        db.User.findOne({ where: { username, id } }).then(({ username }) => {
+          return res.render("view", {
+            user: { username },
+            stories: storyArr
+          });
+        }).catch(err => {
+          if (err) throw err;
+        })
+      }).catch(err => {
+        if (err) throw err;
+      })
+    } else {
+      res.render("login", { msg: "Story Time!" })
     }
   });
 

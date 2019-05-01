@@ -28,10 +28,13 @@
       <div id="storyTable">
         <ul id="storyUl">
           {{#each stories}}
-          <li id="indexTable">
-           <p id="createdTitle">{{this.title}}</p>
-           <p id="created"> Created by: {{User.dataValues.username}}</p>
-          </li>
+          <form action="/stories/{{this.id}}" method="get">
+            <li class="indexTable" id={{this.id}}>
+              <p class="createdTitle">{{this.title}}</p>
+              <p class="created"> Created by: {{User.dataValues.username}}</p>
+              <button class="showStoryButton"  type="submit">View details</button>
+            </li>
+          </form>
           {{/each}}
           {{else}}
           <div>
@@ -55,3 +58,6 @@
 
 
   <script src="/js/index.js"></script>
+  <script>
+    $("#indexTable")
+  </script>

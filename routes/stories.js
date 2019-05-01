@@ -1,12 +1,16 @@
 var router = require("express").Router();
-var controller = require("./../controllers/stories");
+var {getAll, getOne, removeOne, newStory, updateStory, authorized} = require("./../controllers/stories");
 
-  router.get("/", controller.getAll);
+  router.use(authorized);
 
-  router.delete("/:id", controller.delete);
+  router.get("/", getAll);
 
-  router.post("/create", controller.newStory);
+  router.get("/:id", getOne);
 
-  router.put("/story/update", controller.updateStory);
+  router.delete("/:id", removeOne);
+
+  router.post("/create", newStory);
+
+  router.put("/story/update", updateStory);
 
   module.exports = router;

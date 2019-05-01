@@ -108,21 +108,28 @@ select{
   text-align: center;
 }
 
-#indexTable{
+.indexTable{
   margin-bottom: 6vh;
   padding:35px;
   box-shadow: 0px 5px 20px #888888;
+}
+.showStoryButton{
+  font-size: 1.5rem;
+  font-family: 'Cinzel', serif; 
+  font-weight: 600;
 }
 
 #storyContent{
   margin-top:3vh;
 }
 
-#createdTitle{
+.createdTitle{
 font-size: 2rem; 
+font-weight: bolder;
+letter-spacing: 0.15rem;
 }
 
-#created{
+.created{
   font-size: 1.2rem; 
   padding-top:2vh;
 }

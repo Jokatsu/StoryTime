@@ -3,6 +3,25 @@
 var db = require("../models");
 const {validToken} = require('./../utilities/tokenService');
 
+function authorized({signedCookies: {token}}, res, next){
+    console.log('hit authorized route')
+    if (token){
+        validToken(token).then(({user: {id, username}}) => {
+            db.User.findOne({where: {username, id}}).then(user => {
+                if (user){
+                    console.log('authorization success!');
+                    next();                
+                } else {
+                    return res.render("login");
+                }
+            }).catch(err => {
+                console.log(err);
+                if (err) res.render("login");
+            })
+        })
+    }
+}
+
     function getAll (req, res) {
         console.log("getRes")
         db.Story.findAll({}).then(function(data) {
@@ -13,10 +32,18 @@ const {validToken} = require('./../utilities/tokenService');
         });
     }
 
+    function getOne({params: {id}}, res){
+        db.Story.findOne({where: {id}}).then(story => {
+            res.json(story);
+        }).catch(err => {
+            if (err) throw err;
+        })
+    }
+
     function newStory ({signedCookies: {token}, body: {title, genre, text}}, res) {
         if (token){
             validToken(token).then(({user: {id}}) => {
-                let UserId = id;;
+                let UserId = id;
                 db.Story.create({ title, genre, text, UserId }).then(function(data){
                     res.json(data);
                 });
@@ -36,7 +63,7 @@ const {validToken} = require('./../utilities/tokenService');
             res.redirect("/");
         });
     }
-    function del(req, res) {
+    function removeOne(req, res) {
         db.Story.destroy({
             where : req.params.id
         }).then(function() {
@@ -45,8 +72,10 @@ const {validToken} = require('./../utilities/tokenService');
     }
 
 module.exports = {
-    delete: del,
-    updateStory:updateStory,
-    newStory: newStory,
-    getAll:getAll
+    authorized,
+    removeOne,
+    updateStory,
+    newStory,
+    getAll,
+    getOne
 };
