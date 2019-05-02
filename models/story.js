@@ -20,7 +20,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: false
     }
-  });
+  }, {timestamps: false});
   Story.associate = function (models) {
     Story.belongsTo(models.User, {
       foreignKey: {
