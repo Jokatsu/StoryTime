@@ -9,8 +9,16 @@
   </div>
 </nav>
 <div class="container">
-   <div><h2></h2></div>
-
-
+   <div class="row">
+     <div class="col s12 stories">
+       <ul id="storyDetails">
+         <li>Title: {{this.title}}</li>
+         <li>Text: {{this.text}}</li>
+         <li>Author: {{User.dataValues.username}}</li>
+       </ul>
+     </div>
+  </div>
+<button id="editStory" type="Submit">Add to the Story!</button>
+<button id="deleteStory" type="Delete">Delete</button>
    
 </div>
